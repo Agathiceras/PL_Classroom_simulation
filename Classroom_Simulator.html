@@ -24,6 +24,9 @@ svg{display:block}
 .cr-head .back:hover{background:#4a5274}
 .cr-head b{font-size:15px;font-weight:700}
 .cr-head .muted{color:var(--muted);font-size:13px}
+.hdr-btn{margin-left:auto;background:#262b3c;border:1px solid #545d80;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600}
+.hdr-btn:hover{background:#3a4160}
+.hdr-btn+.leave{margin-left:18px}
 .leave{margin-left:auto;color:var(--red);font-size:13px;display:flex;align-items:center;gap:6px}
 .hud{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:8px;align-items:center}
 .hud-chip{background:#262b3c;border:1px solid #545d80;border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
@@ -178,7 +181,7 @@ svg{display:block}
 /* ---------- Simulator layers (guide, decisions, modals) ---------- */
 #spot{position:fixed;border-radius:12px;pointer-events:none;z-index:900;box-shadow:0 0 0 9999px rgba(10,12,22,.55);display:none}
 #spot::after{content:"";position:absolute;inset:-4px;border-radius:14px;border:3px solid var(--coach);animation:pulse 1.4s infinite}
-@keyframes pulse{0%{opacity:1;transform:scale(1)}70%{opacity:0;transform:scale(1.06)}100%{opacity:0}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,211,77,.7)}70%{box-shadow:0 0 0 12px rgba(255,211,77,0)}100%{box-shadow:0 0 0 0 rgba(255,211,77,0)}}
 #coach{position:fixed;z-index:950;width:350px;background:#fff;color:#1f2433;border-radius:16px;padding:18px 20px 16px;box-shadow:0 18px 50px rgba(0,0,0,.45);display:none;transition:left .3s,top .3s;border-top:6px solid var(--coach)}
 #coach .c-step{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#a07a00}
 #coach h4{margin:6px 0 8px;font-size:17px}
@@ -186,6 +189,31 @@ svg{display:block}
 #coach .c-foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
 #coach .c-hint{font-size:12px;color:#8a7020;font-weight:600}
 #coach.shake{animation:shake .4s}
+#coach .c-text{font-size:14px;line-height:1.55;color:#3a4052}
+#coach.side{width:264px;max-height:calc(100vh - 80px);overflow-y:auto;transition:none}
+#coach.side .c-text{font-size:13.5px}
+#coach.wide{width:600px}
+#coach .btn-p:disabled{background:#c9cdd8;cursor:not-allowed}
+.c-check{list-style:none;padding:10px 12px;margin:12px 0 0;background:#f4f6fa;border-radius:10px;font-size:13px}
+.c-check li{padding:3px 0 3px 24px;position:relative;color:#5a6075}
+.c-check li::before{content:"○";position:absolute;left:4px;color:#a0a6b8;font-weight:700}
+.c-check li.ok{color:#1f7a45}
+.c-check li.ok::before{content:"✓";color:#1f9d55}
+.c-list{margin:12px 0 0;padding-left:20px}
+.c-list li{margin:6px 0}
+.views{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 4px}
+.view{background:#f4f6fa;border-radius:12px;padding:10px}
+.vh{font-size:13px;margin-bottom:8px}
+.mock{background:#2a2e3d;border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:6px;height:118px}
+.m-tn{border:1.5px dashed #c98b1e;color:#e8b35a;border-radius:6px;padding:6px 8px;font-size:12px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.m-tn small{font-weight:500;color:#c9a35f}
+.mk-c{flex:1;border-radius:6px;background:#3a4160;color:#cfd3e2;font-size:12px;display:grid;place-items:center}
+.lead-demo{margin:12px 0;display:flex;flex-direction:column;gap:8px;font-size:13px}
+.lead-demo>div{background:#f4f6fa;border-radius:10px;padding:8px 10px 8px 52px;position:relative;line-height:1.45}
+.ld-sw{position:absolute;left:10px;top:10px;width:32px;height:18px;border-radius:999px;border:2px solid #8a90a6}
+.ld-sw::after{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:#8a90a6;top:2px;left:2px}
+.ld-sw.on{background:var(--blue);border-color:var(--blue)}
+.ld-sw.on::after{background:#fff;left:16px}
 @keyframes shake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
 .btn-p{background:#1f2433;color:#fff;border-radius:10px;padding:10px 18px;font-weight:600;font-size:14px}
 .btn-p:hover{background:#3a4260}
@@ -239,6 +267,51 @@ svg{display:block}
 .link-btn{font-size:13px;color:#6a7190;text-decoration:underline}
 .m-card .btn-y:disabled{background:#e3e5ec;color:#9aa0b5}
 .btn-y:disabled{background:#4a5170;color:#b9bed0;cursor:not-allowed}
+#sheet{position:fixed;inset:0;z-index:1200;background:rgba(10,12,22,.72);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:28px 16px;backdrop-filter:blur(3px)}
+.sheet-card{width:min(980px,100%);background:#fff;color:#1f2433;border-radius:22px;padding:26px 30px 22px;box-shadow:0 30px 80px rgba(0,0,0,.5);animation:popIn .3s ease}
+.sheet-note{background:#fff4c7;color:#6b5000;border-radius:12px;padding:10px 14px;font-size:13.5px;line-height:1.5}
+.sheet-card h2{margin:16px 0 6px;font-size:24px}
+.sheet-card h3{margin:20px 0 10px;font-size:17px}
+.sheet-sub{color:#454b5e;font-size:15px;line-height:1.6;margin:0 0 14px}
+.phase-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ph{border-radius:14px;padding:14px 16px;background:#f4f6fa;border-top:5px solid}
+.ph.p1{border-color:var(--blue)}.ph.p2{border-color:#2fbf68}.ph.p3{border-color:#f5a623}
+.ph-t{font-weight:700;font-size:16px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.ph-t span{width:24px;height:24px;border-radius:50%;background:#1f2433;color:#fff;display:grid;place-items:center;font-size:13px}
+.ph-t small{flex-basis:100%;font-weight:500;font-size:12.5px;color:#6a7190}
+.ph ol,.ph ul{margin:10px 0 0;padding-left:20px;font-size:13.5px;line-height:1.5;color:#3a4052}
+.ph li{margin:5px 0}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rules div{background:#eef3ff;border-radius:10px;padding:10px 12px;font-size:14px;color:#2b3354}
+.sheet-card .btns{margin-top:18px;display:flex;justify-content:center}
+.m-card.recap{text-align:left;width:min(620px,92vw)}
+.rc-kicker{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#a07a00}
+.m-card.recap h2{margin:6px 0 6px}
+.rc-steps{list-style:none;padding:0;margin:14px 0 0;counter-reset:rc}
+.rc-steps li{counter-increment:rc;display:flex;gap:12px;align-items:flex-start;padding:9px 12px;border-radius:12px;background:#f4f6fa;margin:6px 0;font-size:14px;line-height:1.5;color:#2b3042;opacity:0;animation:rcIn .45s ease forwards}
+.rc-steps li::before{content:counter(rc);flex:0 0 24px;height:24px;border-radius:50%;background:#1f2433;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.rc-time{flex:0 0 auto;font-weight:700;color:#3a5bd9;font-size:13px;padding-top:1px}
+.rc-now{margin-top:12px;background:#fff4c7;border-radius:12px;padding:10px 14px;font-size:14px;line-height:1.5;color:#4a3b00;opacity:0;animation:rcIn .45s ease forwards}
+@keyframes rcIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.m-card{max-height:92vh;overflow-y:auto}
+.m-card.recap .btns,.m-card.debrief .btns{justify-content:center}
+.m-card.debrief{text-align:left;width:min(760px,94vw)}
+.debrief .rc-steps li{text-align:left}
+.debrief .btns .btn-p,.debrief .btns .btn-y{white-space:nowrap}
+.debrief h2,.debrief .m-icon,.debrief .m-lives{text-align:center}
+.welcome-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:20px 22px;margin:24px 0}
+.welcome-box h3{margin:0 0 8px;font-size:17px;color:var(--lime)}
+.welcome-box p{margin:6px 0;color:#cfd3e2;line-height:1.65;font-size:15px}
+.how{list-style:none;padding:0;margin:10px 0 0;counter-reset:hw;display:grid;gap:10px}
+.how li{counter-increment:hw;display:flex;gap:14px;align-items:flex-start;color:#e3e6f0;font-size:15px;line-height:1.55}
+.how li::before{content:counter(hw);flex:0 0 30px;height:30px;border-radius:50%;background:var(--lime);color:#1d2131;display:grid;place-items:center;font-weight:800}
+.how .btn-ghost{margin-top:6px}
+.btn-ghost{border:1px solid #8a93b8;border-radius:10px;padding:8px 14px;font-size:14px;font-weight:600;color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.sound-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:10px}
+#soundMsg{font-size:14px;color:#cfd3e2}
+.btn-start{font-size:17px;padding:16px 34px;letter-spacing:.02em}
+@media (max-width:900px){.phase-row,.rules{grid-template-columns:1fr}}
 .phase.locked{opacity:.75}
 .qp-q{font-size:15.5px;line-height:1.55;margin:10px 0 14px;font-weight:500}
 .qp-opt{width:100%;text-align:left;display:flex;gap:12px;align-items:center;border:2px solid #e2e5ee;border-radius:12px;padding:12px 14px;margin:8px 0;font-size:14.5px;color:#1f2433;background:#fafbfd;transition:.15s}
@@ -302,6 +375,7 @@ svg{display:block}
 <div id="toast"></div>
 <div id="modal"></div>
 <div id="intro"></div>
+<div id="sheet"></div>
 
 <script>
 /* =========================================================
@@ -425,7 +499,7 @@ const ACTIVITIES = [
   { title:'Let’s get to know each other! 👋', html:
     banner(P.capsuleTop) +
     `<h1>Let’s get to know each other! 👋</h1>
-     <p class="sim-note">Simulator note: the full content of this card will be added in a later version.</p>`
+     <p class="sim-note">Simulator note: the content of this card isn’t reproduced here. In your lesson, use this card to get to know the student before they start working.</p>`
   },
   { title:'How will the lesson work? 🧭', html:
     banner(P.welcomeTop) +
@@ -560,6 +634,7 @@ function header(){
     ${S.view === 'room' ? `<button class="back" data-action="back">${I.back}</button>` : ''}
     <b>Parallel group #183</b><span class="muted">${online} · 4 online</span>
     <div class="hud">${mode}<span class="hud-chip">🕐 ${fmtClock(S.clock)}</span><span class="hud-chip">${hearts}</span><span class="hud-chip" id="dia">💎 ${S.diamonds}</span></div>
+    ${S.phase !== 'intro' ? '<button class="hdr-btn" data-action="openStructure">📋 Lesson structure</button>' : ''}
     <button class="leave" data-action="deco">${I.exit} Leave</button>
   </header>`;
 }
@@ -696,6 +771,7 @@ document.addEventListener('click', e => {
   // Always available: dismissing a chat notification and opening the tutor's notes
   if (action === 'closeMsg'){ e.stopPropagation(); delete S.msgs[arg]; render(); return; }
   if (action === 'openNotes'){ openNotes(); return; }
+  if (action === 'openStructure'){ openStructure(); return; }
 
   if (S.phase === 'guide'){
     const step = GUIDE[S.step];
@@ -716,41 +792,59 @@ function join(i){
   S.rooms[i].joined = true;
   toast(`🔔 ${S.rooms[i].name} joined the lesson`);
 }
+/* Step fields: next = a Next button (no click needed) · target/accept = the player must click that control
+   read = mandatory reading: Next unlocks only once the player has scrolled to the end of `scope`
+          (default: the whole card) and opened every collapsible section inside it
+   side = the card docks on the left so the content stays fully visible · wide = a wider, centred card */
 const GUIDE = [
   { title:'Your Classroom console', next:true, clock:-1,
-    text:'This is what you see when you open a parallel lesson. Each box is a separate <b>room</b> — one per student in your group. Nobody has arrived yet, so every room only shows your own camera.' },
+    text:'This is the <b>Classroom console</b>: the first screen you see when you open a parallel lesson.<br><br>Each of the 4 boxes is a separate <b>room</b>, one per student. Students only see their own room — they can’t see or hear each other, and they only see or hear you when you’re inside their room.<br><br>Nobody has arrived yet, so each room only shows your camera (<b>T</b>). Students join one by one, <b>every 10 minutes</b>.' },
   { title:'A student has arrived!', clock:0, enter:() => join(0), target:'#room-0', accept:['enterRoom:0'],
-    text:'<b>Sofia</b> has just joined her room — you can see her camera next to yours.<br><br>Click on Sofia’s room to go in.' },
+    text:'It’s 17:00 and <b>Sofia</b> has just joined. When a student arrives, their camera appears in their room, next to yours.<br><br>To talk to a student, you have to be <b>inside</b> their room. Click on Sofia’s room to go in.' },
   { title:'Welcome Sofia', clock:1, next:true,
-    text:'You’re now inside Sofia’s room. You can see her camera here, and on the left the other rooms, which are still empty.<br><br>Start with some <b>small talk</b>: greet Sofia and help her feel comfortable. Remember: you have <b>10 minutes</b> to introduce the lesson and present what she’ll do today.' },
-  { title:'Open the lesson', target:'.tb-group', accept:['openTasks','toggleDropdown'],
-    text:'To show the presentation, click <b>Assignments</b>. Notice that the button turns blue when your mouse is over it.' },
+    text:'You’re inside Sofia’s room: now she can see and hear you. The other rooms stay visible on the left, so you’ll notice when someone arrives or raises a hand.<br><br>The first 10 minutes with each student are the <b>onboarding</b> (the introduction). Start with some <b>small talk</b>: greet Sofia by name, ask how she’s doing and help her feel comfortable.<br><br>Want to see the whole lesson at a glance? Open <b>📋 Lesson structure</b> in the top bar at any moment.' },
+  { title:'Open the lesson materials', target:'.tb-group', accept:['openTasks','toggleDropdown'],
+    text:'The lesson materials (the activity cards) are in <b>Assignments</b>. Click <b>Assignments</b> — it turns blue when your mouse is over it.' },
   { title:'Choose the first activity', target:'#dd-0', accept:['pickActivity:0'],
-    text:'This is the list of today’s activities. Click the first one: <b>“Get ready for your first creative mission”</b>.' },
-  { title:'Teacher notes', clock:2, target:'#taskScroll .tnotes', next:true,
-    text:'This box is the <b>Teacher notes</b>. Only you can see it — Sofia sees only the activity content.<br><br>The notes are the new wiki: the guide you should study <b>before</b> every lesson.' },
+    text:'This is the list of today’s activities, in order. Click the first one: <b>“Get ready for your first creative mission”</b>.' },
+  { title:'Two views of the same card', next:true, wide:true,
+    text:'Before you go on, it’s important to understand <b>what you see</b> and <b>what Sofia sees</b>. You’re both on the same card, but not on the same screen:' +
+      `<div class="views">
+        <div class="view"><div class="vh">👩‍🏫 What <b>you</b> see</div>
+          <div class="mock"><div class="m-tn">Teacher notes<small>only for you</small></div><div class="mk-c">Activity content</div></div></div>
+        <div class="view"><div class="vh">👧 What <b>Sofia</b> sees</div>
+          <div class="mock"><div class="mk-c">Activity content</div></div></div>
+      </div>` +
+      '<ul class="c-list"><li>The box with the <b>orange dashed border</b> is the <b>Teacher notes</b>: how long the card takes, what you should do and what to watch out for.</li><li>Sofia <b>never</b> sees the Teacher notes — only the activity content. Don’t read them out to her.</li><li>The notes replace the old wiki: study them <b>before</b> every lesson.</li></ul>' },
+  { title:'Read the Teacher notes', clock:2, target:'#taskScroll', side:true, read:{ scope:'#taskScroll .tnotes' },
+    text:'These are the Teacher notes of the first card. They explain the goal of today’s lesson and how a parallel lesson works.<br><br>Read them now: <b>open every section</b> and <b>scroll to the end of the notes</b>. Next unlocks when you’re done.' },
   { title:'Lead the group', target:'#leadToggle', accept:['toggleLead'],
-    text:'Now turn on <b>Lead the group</b>. With it on, every time you move through the activities and the presentation, Sofia’s screen moves with you at the same pace.<br><br>Click the switch — it turns blue when it’s active.' },
-  { title:'Sofia is following you', clock:3, target:'#taskScroll', next:true,
-    text:'<b>Lead the group</b> is on ✅<br><br>Scroll through the activity to see all its content. This is exactly what Sofia sees on her screen (without the Teacher notes).' },
+    text:'Now turn on <b>Lead the group</b>. Only you have this switch — students don’t.' +
+      `<div class="lead-demo">
+        <div><span class="ld-sw"></span><b>OFF</b> — you move to another card or scroll, and Sofia stays where she was. She may be looking at something else, or only at your camera.</div>
+        <div><span class="ld-sw on"></span><b>ON</b> — every card you open and every scroll you make, Sofia sees at the same time.</div>
+      </div>` +
+      'Click the switch — it turns blue when it’s on.' },
+  { title:'Sofia is following you', clock:3, target:'#taskScroll', side:true, read:{},
+    text:'<b>Lead the group</b> is on ✅ From now on, Sofia sees exactly what you see — without the Teacher notes.<br><br>Scroll through the <b>whole card</b> as you would with her. Next unlocks when you reach the end.' },
   { title:'Next activity', target:'#btnNext', accept:['nextTask'],
-    text:'The arrow pointing right takes you to the <b>next activity</b> of the lesson. Click it.' },
-  { title:'Classroom tools', clock:4, target:'#taskScroll', next:true,
-    text:'Because this is Sofia’s first lesson, this card teaches her to use the Classroom tools — microphone, camera… and how to <b>raise her hand ✋</b>.<br><br>That’s key in parallel lessons: even when you’re in another student’s room, you’ll know she needs help. Open the help sections to see what she sees.' },
+    text:'The arrow pointing right takes you to the <b>next activity</b> of the lesson. Because Lead the group is on, Sofia moves with you. Click it.' },
+  { title:'Classroom tools', clock:4, target:'#taskScroll', side:true, read:{},
+    text:'Because this is Sofia’s first lesson, this card teaches her to use Classroom: the microphone, the camera and how to <b>raise her hand ✋</b>.<br><br>Raising her hand is how Sofia will call you during her independent work — even when you’re in another student’s room.<br><br>Read the card to the end, including the Teacher notes at the bottom.' },
   { title:'Keep going', target:'#btnNext', accept:['nextTask'],
-    text:'Click <b>Next task</b> to continue.' },
+    text:'Click <b>Next task</b> to go to the next card.' },
   { title:'Getting to know each other', clock:5, target:'#btnNext', accept:['nextTask'],
-    text:'Take a moment to get to know Sofia. When you’re ready, click <b>Next task</b>.' },
-  { title:'How the lesson works', clock:6, target:'#taskScroll', next:true,
-    text:'This card explains how the lesson works: most of it is <b>independent work</b> with task cards, and Sofia can call you over whenever she needs you.<br><br>Show her how to call you, and reassure her that working on her own is normal — you’re nearby.' },
+    text:'This card is for <b>getting to know the student</b>. In a real lesson, this is where you’d ask about their interests and what they like to create — it helps them feel comfortable before working on their own.<br><br>In this tour you don’t need to do anything here. Click <b>Next task</b> to continue.' },
+  { title:'How the lesson works', clock:6, target:'#taskScroll', side:true, read:{},
+    text:'This card explains the parallel format: most of the lesson is <b>independent work</b> with the cards, and Sofia can call you whenever she needs you. Show her how to raise her hand.<br><br><b>Important:</b> don’t just ask “Is it clear?”. Ask her to <b>repeat in her own words</b> how the lesson will work and what she’ll do if she needs help. Some students feel left alone in this format even after the explanation — hearing them repeat it is how you know they really got it.<br><br>Read the card to the end.' },
   { title:'Keep going', target:'#btnNext', accept:['nextTask'],
-    text:'Click <b>Next task</b> to continue.' },
-  { title:'Explore the example', clock:7, target:'#btnNext', accept:['nextTask'],
-    text:'Look at the example animation together and talk about how it was made. Then click <b>Next task</b>.' },
-  { title:'The last synchronous card', clock:7, target:'#tn-last', next:true, scrollTo:'tn-last',
-    text:'Read the Teacher notes: <b>Format: SYNCHRONOUS (end of the introduction)</b>. This is the last card you do together. Keep an eye on the time — you’ll usually get here <b>before</b> the 10 minutes are up.<br><br>Say goodbye for now: confirm that everything is clear, remind Sofia how to raise her hand, and leave her working on her own with the cards.' },
+    text:'Click <b>Next task</b>. For this tour, we’ll skip ahead to the <b>last card you do together</b> with the student.' },
+  { title:'The last synchronous card', clock:7, target:'#taskScroll', side:true, read:{ scope:'#tn-last' },
+    // Skips the example card: jumps straight to "Opening the animation workshop", starting from the top
+    enter:() => { curRoom().activity = 5; },
+    text:'This is the last card you work on together with the student. Scroll down to the <b>Teacher notes</b> at the bottom of the card and read them.<br><br>Look for <b>Format: SYNCHRONOUS (end of the introduction)</b>: it tells you this is where the introduction ends. Keep an eye on the time — you’ll usually get here <b>before</b> the 10 minutes are up.<br><br>Close the introduction: confirm that everything is clear, remind Sofia how to raise her hand, and leave her working on her own with the cards.' },
   { title:'A new student has arrived', clock:8, enter:() => join(1), target:'#room-1', accept:['enterRoom:1'], last:true,
-    text:'It’s 17:08 and <b>Alexander</b> has just joined his room — look at the sidebar.<br><br>This is the end of the guided tour. From now on, the decisions are yours! Click Alexander’s room to go and see him.' }
+    text:'It’s 17:08 and <b>Alexander</b> has just joined his room — look at the sidebar on the left.<br><br>This is the end of the guided tour. From now on, the decisions are yours! Click Alexander’s room to go and see him.' }
 ];
 
 function startGuide(){
@@ -760,6 +854,7 @@ function startGuide(){
 }
 function enterStep(){
   const st = GUIDE[S.step];
+  S.readEnd = false;
   if (st.clock !== undefined) S.clock = st.clock;
   if (st.enter) st.enter();
   if (st.scrollTo && S.room !== null) curRoom().scrollTo = st.scrollTo;
@@ -772,6 +867,26 @@ function nextGuide(){
   S.step++;
   enterStep();
 }
+// Mandatory reading: has the player opened every section and reached the end of the content?
+function readProgress(cfg){
+  const sc = $('#taskScroll');
+  if (!sc) return { done:true, total:0, opened:0, end:true };
+  const scope = cfg.scope ? document.querySelector(cfg.scope) : sc;
+  // Opening sections is required only where a scope is given (the Teacher notes); elsewhere, scrolling to the end is enough
+  const sections = scope && (cfg.scope || cfg.sections) ? [...scope.querySelectorAll('details')] : [];
+  const opened = sections.filter(d => d.dataset.seen).length;
+  if (!S.readEnd && scope){
+    const reached = cfg.scope
+      ? scope.getBoundingClientRect().bottom <= sc.getBoundingClientRect().bottom + 8
+      : sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 16;
+    if (reached) S.readEnd = true;   // once reached, scrolling back up doesn't undo it
+  }
+  return { total:sections.length, opened, end:S.readEnd, done:S.readEnd && opened === sections.length };
+}
+document.addEventListener('toggle', e => {
+  if (e.target.tagName === 'DETAILS' && e.target.open){ e.target.dataset.seen = '1'; if (S.phase === 'guide') renderCoach(); }
+}, true);
+
 function nudge(){
   const c = $('#coach');
   c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake');
@@ -787,10 +902,29 @@ function renderCoach(){
     return;
   }
   const st = GUIDE[S.step];
-  coach.innerHTML = `<div class="c-step">Guided tour · ${S.step + 1}/${GUIDE.length}</div><h4>${st.title}</h4><p>${st.text}</p>
-    <div class="c-foot">${st.next ? '<span></span><button class="btn-p" id="coachNext">Next →</button>' : '<span class="c-hint">👆 Click the highlighted element</span><span></span>'}</div>`;
+  const rd = st.read ? readProgress(st.read) : null;
+  let foot;
+  if (rd){
+    const items = [];
+    if (rd.total) items.push(`<li class="${rd.opened === rd.total ? 'ok' : ''}">Open every section (${rd.opened}/${rd.total})</li>`);
+    items.push(`<li class="${rd.end ? 'ok' : ''}">Scroll to the end${st.read.scope ? ' of the notes' : ' of the card'}</li>`);
+    foot = `<ul class="c-check">${items.join('')}</ul><div class="c-foot"><span></span><button class="btn-p" id="coachNext" ${rd.done ? '' : 'disabled'}>Next →</button></div>`;
+  } else if (st.next){
+    foot = '<div class="c-foot"><span></span><button class="btn-p" id="coachNext">Next →</button></div>';
+  } else {
+    foot = '<div class="c-foot"><span class="c-hint">👆 Click the highlighted element</span><span></span></div>';
+  }
+  coach.className = (st.side ? 'side ' : '') + (st.wide ? 'wide' : '');
+  coach.innerHTML = `<div class="c-step">Guided tour · ${S.step + 1}/${GUIDE.length}</div><h4>${st.title}</h4><div class="c-text">${st.text}</div>${foot}`;
   coach.style.display = 'block';
-  const btn = $('#coachNext'); if (btn) btn.onclick = nextGuide;
+  const btn = $('#coachNext'); if (btn) btn.onclick = () => { if (!btn.disabled) nextGuide(); };
+  if (st.side){
+    // Docked over the sidebar so the card being read stays fully visible
+    const t = st.target ? document.querySelector(st.target) : null;
+    if (t){ const r = t.getBoundingClientRect(), pad = 6; Object.assign(spot.style, { display:'block', left:(r.left-pad)+'px', top:(r.top-pad)+'px', width:(r.width+pad*2)+'px', height:(r.height+pad*2)+'px' }); }
+    coach.style.left = '12px'; coach.style.top = '66px';
+    return;
+  }
 
   const t = st.target ? document.querySelector(st.target) : null;
   const vw = innerWidth, vh = innerHeight, m = 16, pad = 6;
@@ -937,6 +1071,18 @@ const QUESTIONS = [
 
   /* 2 — Closing the introduction */
   { who:'Alexander · 17:17', room:1, present:[0,1,2],
+    recap:{ kicker:'Quick recap · Onboarding', title:'Step by step: what you did with Sofia',
+      sub:'Sofia’s onboarding (17:00–17:08). These are the steps you repeat with <b>every</b> student:',
+      steps:[
+        { text:'<b>Small talk</b>: you greeted Sofia and helped her feel comfortable.' },
+        { text:'Opened <b>Assignments</b> → the first card, and read the <b>Teacher notes</b> (only you can see them).' },
+        { text:'Turned on <b>Lead the group</b>, so her screen follows yours.' },
+        { text:'<b>Classroom tools</b>: microphone, camera and raising her hand ✋.' },
+        { text:'Got to know her and explained <b>how the lesson works</b> — then asked her to repeat it in her own words.' },
+        { text:'The <b>example</b> and opening the tool, up to the card marked <b>SYNCHRONOUS (end of the introduction)</b>.' },
+        { text:'A short goodbye, and Sofia started her <b>independent work</b>.' }
+      ],
+      now:'It’s 17:17. You’ve done the same steps with Alexander, and you’ve reached his last synchronous card. Time to close his introduction.' },
     setup(){
       clearWorld(); at(17); S.following = true;
       inRoom(1, { mode:'tasks', activity:5, lead:true, scrollTo:'tn-last' });
@@ -975,6 +1121,14 @@ const QUESTIONS = [
 
   /* 4 — A student arrives early */
   { who:'Mateo · 17:22', room:2, present:[0,1,2,3],
+    recap:{ title:'Where you are now',
+      steps:[
+        { time:'17:17', text:'You closed Alexander’s introduction with a motivating goodbye: he’s now working on his own.' },
+        { time:'17:18', text:'Sofia raised her hand ✋ and Mateo arrived at the same time.' },
+        { time:'17:18', text:'You went to Mateo first, because <b>onboarding comes before a raised hand</b>.' },
+        { time:'17:18–17:22', text:'Mateo’s onboarding: small talk, Assignments, <b>Lead the group</b>, Classroom tools…' }
+      ],
+      now:'You’re halfway through Mateo’s onboarding, on the card <i>“How will the lesson work?”</i>.' },
     setup(){
       clearWorld(); at(22); S.following = true;
       S.rooms[0].hand = true;
@@ -1021,25 +1175,40 @@ const QUESTIONS = [
     },
     q:'You’re in Sofia’s room and she’s sharing her screen to show you her project. What feedback could you give her in two minutes?',
     options:[
-      { label:'“What a pretty drawing!”', kind:'say', say:'What a pretty drawing!',
-        why:'It’s kind, but it isn’t feedback: it’s too simple and doesn’t tell Sofia what she did well or what she could do next.' },
-      { label:'“Wow, Sofia, I’m impressed — you did all of this by yourself! Even though you went for a nature theme instead of the letters, I like how you used shapes, your colour palette works, and you were brave enough to make lots of frames, which is what makes the movement look smoother. What do you have in mind to continue your animation?”', kind:'say', correct:true,
-        say:'Wow, Sofia, I’m impressed — you did all of this by yourself! Even though you went for a nature theme instead of the letters, I like how you used shapes, your colour palette works, and you were brave enough to make lots of frames, which is what makes the movement look smoother. What do you have in mind to continue your animation?',
-        why:'This is constructive feedback: it points out what she did well and, with the question at the end, motivates her to keep exploring on her own.' },
-      { label:'“Sofia, your drawing is nice, but it doesn’t match the lesson topic, which asks you to draw the letters of your name. You can save this one and start another one where you draw the letters.”', kind:'say',
-        say:'Sofia, your drawing is nice, but it doesn’t match the lesson topic, which asks you to draw the letters of your name. You can save this one and start another one where you draw the letters.',
-        why:'This answer isn’t flexible and focuses on the mistakes. Flexibility is important to keep students motivated — and it offers no real feedback on what she did well.' }
+      // Texts changed after the first recordings: these options look for *_v2 files (until they exist, the line is shown on screen only)
+      { label:'“Sofia, this is amazing, truly amazing! Honestly, it’s one of the most beautiful drawings I’ve seen. You’re a real artist and you should be very proud of yourself. Keep doing what you love — when you enjoy what you do, that’s what really matters, and everything else will come.”', kind:'say',
+        say:'Sofia, this is amazing, truly amazing! Honestly, it’s one of the most beautiful drawings I’ve seen. You’re a real artist and you should be very proud of yourself. Keep doing what you love — when you enjoy what you do, that’s what really matters, and everything else will come.',
+        voice:'Tutor_D6_A_v2.mp3',
+        why:'It sounds warm, but it’s only general praise: it doesn’t tell Sofia what exactly she did well or what she could try next. Talking a lot isn’t the same as giving feedback.' },
+      { label:'“Wow, Sofia, you made this all by yourself! Your shapes and colours work really well, and all those frames make the movement smooth. What would you like to add next?”', kind:'say', correct:true,
+        say:'Wow, Sofia, you made this all by yourself! Your shapes and colours work really well, and all those frames make the movement smooth. What would you like to add next?',
+        voice:'Tutor_D6_B_v2.mp3',
+        why:'Short, specific and motivating: it names concrete strengths (shapes, colours, the number of frames) and ends with a question that invites her to keep exploring. Good feedback isn’t about length — it’s about being specific.' },
+      { label:'“Sofia, let me explain something important. Frame-by-frame animation is based on the persistence of vision: each frame is shown for a fraction of a second and the brain reads the sequence as continuous motion. In your case, the theme doesn’t follow the lesson objective, which was to animate the letters of your name, so the next step would be to start again following the instructions.”', kind:'say',
+        say:'Sofia, let me explain something important. Frame-by-frame animation is based on the persistence of vision: each frame is shown for a fraction of a second and the brain reads the sequence as continuous motion. In your case, the theme doesn’t follow the lesson objective, which was to animate the letters of your name, so the next step would be to start again following the instructions.',
+        voice:'Tutor_D6_C_v2.mp3',
+        why:'This sounds like a lecture for an adult: technical vocabulary, no recognition of her work, and the focus is on what’s wrong. With children, keep it simple, specific and encouraging — and be flexible about creative choices.' }
     ] },
 
   /* 7 — Two raised hands at 17:50 (check the notes) */
   { who:'Console · 17:50', requireNotes:true, present:[0,1,2,3],
+    recap:{ kicker:'Quick recap · The lesson so far', title:'All four students are in their lesson',
+      steps:[
+        { time:'17:00', text:'Sofia’s onboarding.' },
+        { time:'17:08', text:'Alexander’s onboarding.' },
+        { time:'17:18', text:'Mateo’s onboarding (before Sofia’s raised hand).' },
+        { time:'17:28', text:'2 spare minutes → feedback on Sofia’s project.' },
+        { time:'17:30', text:'Valentina’s onboarding.' },
+        { time:'17:40–17:50', text:'Everyone works independently; you answer raised hands and messages.' }
+      ],
+      now:'The <b>closing phase</b> begins. Each student has 60 minutes, so goodbyes follow the order in which their lessons started.' },
     setup(){
       clearWorld(); at(50); atConsole();
       S.rooms[0].hand = true; S.rooms[2].hand = true;
       S.notesTab = true; S.notesSeen = false;
     },
     events:['✋ Sofia and Mateo raised their hands'],
-    q:'You’ve finished giving Sofia feedback and Valentina’s onboarding, and it’s now <b>17:50</b>. You’re outside the rooms and two hands are raised: Sofia’s and Mateo’s. Who would you go to first? Before you answer, check your notes.',
+    q:'You’ve finished giving Sofia feedback and Valentina’s onboarding, and it’s now <b>17:50</b>. You’re outside the rooms and two hands are raised: Sofia’s and Mateo’s. Who would you go to first?<br><br>Before you answer, check <b>📝 My notes</b> (the yellow tab). These are notes <b>you take yourself</b> during the lesson — Classroom doesn’t create them for you. Writing down when each student started is how you know who says goodbye first.',
     options:[
       { label:'Mateo, since you’re free from onboardings and he has a question', kind:'pick', action:'enterRoom:2',
         why:'Offboarding (closing) comes before a raised hand. Going to Mateo first would delay Sofia’s closing and the whole flow of the lesson. Your notes show it: Sofia is your first goodbye.' },
@@ -1054,27 +1223,39 @@ const QUESTIONS = [
 
   /* 8 — Alexander's reflection */
   { who:'Alexander · 18:00', room:1, present:[1,2,3],
+    recap:{ kicker:'Quick recap · Offboarding', title:'How a goodbye (offboarding) works',
+      sub:'About 10 minutes, live with the student:',
+      steps:[
+        { text:'The student <b>shares their screen</b> and shows their project.' },
+        { text:'You give feedback: <b>one specific strength</b> and <b>one next step</b>.' },
+        { text:'<b>Reflection</b>: the card <i>“What did you discover today?”</i> — the student rates their progress and tells you about it.' },
+        { text:'You <b>preview the next lesson</b> (Canva: an email address will be needed).' },
+        { text:'<b>Goodbye</b> on a positive note.' }
+      ],
+      now:'You’ve said goodbye to Sofia and helped Mateo with his question. It’s 18:00: Alexander’s goodbye. He has just rated his progress on the reflection card.' },
     setup(){
       clearWorld(); at(60); S.following = true;
       leave(0);
       inRoom(1, { mode:'tasks', activity:17, lead:true, scrollTo:'progress' });
     },
     intro:{
-      text:'You’ve said goodbye to Sofia and helped Mateo with his questions. You’re finishing Alexander’s goodbye, and there’s a question about his progress. Let’s hear what Alexander has to say.',
+      text:'You’re finishing Alexander’s goodbye. He rated his progress with “I made the project by myself”. Let’s hear what he has to say about it.',
       btn:'▶ Listen to Alexander', replay:'Listen again',
       run(done){ speak(1, 'Alexander_reflection.mp3', 'Hmm… It was pretty easy for me because I had used these tools before. I did everything by myself, but I didn’t really learn anything new because I already knew how to use them.', done); }
     },
     q:'What would you say to Alexander?',
     options:[
-      { label:'“I see — but at least you had fun doing something you enjoy.”', kind:'say',
-        say:'I see — but at least you had fun doing something you enjoy.',
-        why:'This doesn’t respond to what Alexander told you: the lesson was too easy for him. If you don’t raise the level, he may get bored.' },
+      { label:'“I see — but hey, you had a lot of fun! Learning is all about fun: making great moments out of the lesson, feeling comfortable with your own progress and spending time doing the things you love. The result doesn’t matter that much, believe me.”', kind:'say',
+        say:'I see — but hey, you had a lot of fun! Learning is all about fun: making great moments out of the lesson, feeling comfortable with your own progress and spending time doing the things you love. The result doesn’t matter that much, believe me.',
+        voice:'Tutor_D8_A_v2.mp3',
+        why:'It sounds supportive, but it avoids what Alexander just told you: the lesson was too easy for him. Saying the result doesn’t matter won’t help him grow — if you don’t raise the level, he may get bored.' },
       { label:'“It’s great that you already know some of this — that gives you an advantage. It’s the first lesson, so it’s normal for it to feel easy. Tell me what kind of challenges you’d like to see or learn, and I’ll keep them in mind as extra activities for the next lesson.”', kind:'say', correct:true,
         say:'It’s great that you already know some of this — that gives you an advantage. It’s the first lesson, so it’s normal for it to feel easy. Tell me what kind of challenges you’d like to see or learn, and I’ll keep them in mind as extra activities for the next lesson.',
         why:'You recognise what he already knows, and you also take into account that you need to raise the level so he doesn’t get bored — so you try to get to know him better and adapt the lesson to him.' },
-      { label:'“When that happens, you could help me with your classmates who find everything a bit harder.”', kind:'say',
-        say:'When that happens, you could help me with your classmates who find everything a bit harder.',
-        why:'This doesn’t solve Alexander’s situation: he needs a bigger challenge for himself. Helping classmates isn’t his role in a parallel lesson.' }
+      { label:'“That’s actually a very common phenomenon, Alexander. When learners have prior experience, the perceived difficulty decreases, but consolidation still takes place. Repetition reinforces what you already know, so even if it felt easy, the practice was valuable for your long-term learning.”', kind:'say',
+        say:'That’s actually a very common phenomenon, Alexander. When learners have prior experience, the perceived difficulty decreases, but consolidation still takes place. Repetition reinforces what you already know, so even if it felt easy, the practice was valuable for your long-term learning.',
+        voice:'Tutor_D8_C_v2.mp3',
+        why:'This is a lecture-style explanation for an adult. It uses words a child won’t relate to, and it doesn’t give Alexander what he needs: a bigger challenge.' }
     ] },
 
   /* 9 — One spare minute and a technical problem */
@@ -1204,9 +1385,11 @@ function runQuestion(){
   if (Q.present) S.rooms.forEach((r, k) => { r.joined = Q.present.includes(k); });
   if (Q.setup) Q.setup();
   render();
-  (Q.events || []).forEach(e => toast(e));
   (Q.preload || []).forEach(preloadAsset);
-  showQuestion();
+  // Options are shown in a random order, kept the same while the player retries this situation
+  S.order = Q.options.map((_, k) => k).sort(() => Math.random() - 0.5);
+  const go = () => { (Q.events || []).forEach(e => toast(e)); showQuestion(); };
+  if (Q.recap) showRecap(Q.recap, go); else go();
 }
 
 function gameClick(action, arg, key){
@@ -1268,7 +1451,7 @@ function showQuestion(){
     qp.innerHTML = head + `<div class="qp-body">
       <p class="qp-q">${Q.q}</p>
       ${locked ? '<p class="qp-lock">📝 Open <b>My notes</b> (the yellow tab) before you answer.</p>' : ''}
-      ${Q.options.map((o,i) => `<button class="qp-opt ${S.tried.includes(i) ? 'tried' : ''} ${locked ? 'locked' : ''}" data-opt="${i}"><span class="k">${'ABC'[i]}</span><span>${o.label}</span></button>`).join('')}
+      ${(S.order || Q.options.map((_, k) => k)).map((i, pos) => { const o = Q.options[i]; return `<button class="qp-opt ${S.tried.includes(i) ? 'tried' : ''} ${locked ? 'locked' : ''}" data-opt="${i}"><span class="k">${'ABC'[pos]}</span><span>${o.label}</span></button>`; }).join('')}
       ${Q.intro && Q.intro.replay ? `<button class="qp-replay" id="replayBtn">🔁 ${Q.intro.replay}</button>` : ''}</div>`;
     showQP();
     qp.querySelectorAll('.qp-opt').forEach(b => b.onclick = () => choose(+b.dataset.opt));
@@ -1300,15 +1483,16 @@ function choose(i){
   if (o.kind === 'pick'){ setTimeout(resolve, 250); return; }
 
   // say: the tutor says the line first, then the student may answer (audio), then feedback
-  tutorSay(o.say, `Tutor_D${qIndex + 1}_${'ABC'[i]}.mp3`, () => {
+  // Recordings are named after the option's original letter (A/B/C as written in QUESTIONS), not its shuffled position
+  tutorSay(o.say, o.voice || `Tutor_D${qIndex + 1}_${'ABC'[i]}.mp3`, () => {
     if (o.audio) speak(Q.room, o.audio, null, resolve);
     else resolve();
-  });
+  }, !!o.voice);   // re-recordings that may not exist yet don't trigger the "audio not found" notice
 }
 
 // The tutor's recorded voice (Audios/Tutor_D<decision>_<letter>.mp3) with the line on screen.
 // If the recording is missing, the line stays on screen for its reading time instead.
-function tutorSay(text, file, done){
+function tutorSay(text, file, done, quiet){
   const readMs = Math.min(9000, 1600 + text.length * 35);
   const tile = document.querySelector('.vt.teacher');
   if (tile) tile.classList.add('speaking');
@@ -1317,14 +1501,23 @@ function tutorSay(text, file, done){
     const t = document.querySelector('.vt.teacher'); if (t) t.classList.remove('speaking');
     caption(null);
     done();
-  }, readMs);
+  }, readMs, quiet);
 }
 
-function playAudio(src, done, fallbackMs){
+// Shown once per file when a sound can't be loaded (e.g. the Audios folder isn't next to the simulator)
+const audioWarned = {};
+function audioMissing(src){
+  const name = src.split('/').pop();
+  if (audioWarned[name]) return; audioWarned[name] = true;
+  toast(`🔇 Couldn’t play “${name}”. Check that the Audios folder is in the same folder as the simulator.`, true);
+}
+
+function playAudio(src, done, fallbackMs, quiet){
   const a = new Audio(src);
   let fin = false;
   const f = () => { if (fin) return; fin = true; done(); };
   const fb = fallbackMs || 1500;
+  a.addEventListener('error', () => { if (!quiet) audioMissing(src); });
   a.onended = () => setTimeout(f, 400);
   // Safety net: continue after the clip's length even if 'ended' never fires
   a.onloadedmetadata = () => { if (isFinite(a.duration)) setTimeout(f, a.duration * 1000 + 1500); };
@@ -1390,9 +1583,72 @@ function correct(o){
   };
 }
 
+/* ---------- Parallel lesson structure (reference sheet) ---------- */
+function structureHTML(){
+  return `<div class="sheet-card">
+    <div class="sheet-note">📌 Training reference. This structure is <b>not</b> included in the lesson materials. Read it before the simulation and come back to it whenever you need a refresher.</div>
+    <h2>How a parallel lesson works</h2>
+    <p class="sheet-sub">Each student has <b>60 minutes</b>. Students join <b>one by one, every 10 minutes</b> (17:00, 17:10, 17:20, 17:30), so each one is at a different point of their lesson.</p>
+    <div class="phase-row">
+      <div class="ph p1"><div class="ph-t"><span>1</span>Onboarding<small>about 10 min · live, 1:1</small></div>
+        <ol>
+          <li>Small talk: greet the student and help them feel comfortable.</li>
+          <li>Open <b>Assignments</b> → the first card, and turn on <b>Lead the group</b>.</li>
+          <li>Classroom tools: microphone, camera and <b>raising their hand ✋</b>.</li>
+          <li>Get to know the student.</li>
+          <li>How the lesson works: independent work with the cards, and how to call you. Ask them to <b>repeat it in their own words</b>.</li>
+          <li>The example and opening the tool, up to the card marked <b>SYNCHRONOUS (end of the introduction)</b>.</li>
+          <li>A motivating goodbye: help is in the cards, and they can raise their hand any time.</li>
+        </ol></div>
+      <div class="ph p2"><div class="ph-t"><span>2</span>Independent work<small>about 40 min · student on their own</small></div>
+        <ul>
+          <li>The student works through the self-study cards.</li>
+          <li>You onboard the next students, answer raised hands and messages, and check in briefly when you have time.</li>
+          <li>The cards remind students to call you before saving their project.</li>
+        </ul></div>
+      <div class="ph p3"><div class="ph-t"><span>3</span>Offboarding (closing)<small>about 10 min · live, 1:1</small></div>
+        <ol>
+          <li>The student shares their screen and shows their project.</li>
+          <li>Feedback: <b>one specific strength</b> and <b>one next step</b>.</li>
+          <li>Reflection card: <i>“What did you discover today?”</i></li>
+          <li>Preview of the next lesson.</li>
+          <li>Goodbye on a positive note.</li>
+        </ol></div>
+    </div>
+    <h3>When several things happen at once</h3>
+    <div class="rules">
+      <div><b>Onboarding</b> &gt; raised hand</div>
+      <div><b>Offboarding (closing)</b> &gt; raised hand</div>
+      <div>Goodbyes follow the order in which lessons started, so <b>write down each student’s start time</b>.</div>
+      <div>Spare minutes? Use them for whoever needs you most, or for a quick check-in.</div>
+    </div>
+    <div class="btns"><button class="btn-y" id="sheetClose">Got it</button></div>
+  </div>`;
+}
+function openStructure(){
+  const s = $('#sheet');
+  s.innerHTML = structureHTML();
+  s.style.display = 'flex';
+  $('#sheetClose').onclick = () => { s.style.display = 'none'; s.innerHTML = ''; };
+}
+
+/* ---------- Recap between situations ---------- */
+function showRecap(rc, done){
+  modal(`<div class="m-card info recap">
+    <div class="rc-kicker">${rc.kicker || 'Quick recap'}</div>
+    <h2>${rc.title}</h2>
+    ${rc.sub ? `<p>${rc.sub}</p>` : ''}
+    <ol class="rc-steps">${rc.steps.map((s, k) => `<li style="animation-delay:${0.15 + k * 0.35}s">${s.time ? `<span class="rc-time">${s.time}</span>` : ''}<span>${s.text}</span></li>`).join('')}</ol>
+    ${rc.now ? `<div class="rc-now" style="animation-delay:${0.15 + rc.steps.length * 0.35}s"><b>Now:</b> ${rc.now}</div>` : ''}
+    <div class="btns"><button class="btn-y" id="rcGo">Continue →</button></div></div>`);
+  $('#rcGo').onclick = () => { closeModal(); done(); };
+}
+
 /* ---------- Tutor notes (scene 7) ---------- */
 function openNotes(){
   modal(`<div class="m-card notes-card">
+    <h2 style="margin:0 0 4px">📝 Your own notes</h2>
+    <p style="margin:0 0 14px">You wrote these down during the lesson. Classroom doesn’t keep this record for you — get used to noting when each student started.</p>
     <img src="${P.notes}" alt="Your notes">
     <div class="btns"><button class="btn-y" id="mNotesBack">← Back to the game</button></div></div>`);
   $('#mNotesBack').onclick = () => { S.notesSeen = true; closeModal(); render(); if (isQPOpen()) showQuestion(); };
@@ -1401,11 +1657,22 @@ function openNotes(){
 function finish(){
   S.phase = 'done';
   render();
-  modal(`<div class="m-card info">
+  const perfect = S.diamonds >= QUESTIONS.length && S.lives === 3;
+  modal(`<div class="m-card info debrief">
     <div class="m-icon">🏁</div><h2>Simulation complete!</h2>
-    <p>You’ve made it through a full parallel lesson — from the first onboarding to the last goodbye.</p>
+    <p style="text-align:center">You’ve made it through a full parallel lesson, from the first onboarding to the last goodbye.</p>
     <div class="m-lives">${'❤️'.repeat(S.lives)}${'🖤'.repeat(3 - S.lives)} &nbsp; 💎 ${S.diamonds} / ${QUESTIONS.length}</div>
-    <div class="btns"><button class="btn-p" id="mMenu">Back to menu</button><button class="btn-y" id="mAgain">Play the game again</button></div></div>`);
+    <div class="rc-kicker" style="margin-top:14px">Your lesson, step by step</div>
+    <ol class="rc-steps">
+      <li style="animation-delay:.1s"><span class="rc-time">17:00–17:30</span><span><b>Onboardings</b>, one every 10 minutes: small talk, Assignments, <b>Lead the group</b>, tools, how the lesson works (the student repeats it back), the example, and a motivating goodbye.</span></li>
+      <li style="animation-delay:.35s"><span class="rc-time">In between</span><span><b>Priorities</b>: onboarding first; raised hands and messages in the gaps; spare minutes for whoever needs you most.</span></li>
+      <li style="animation-delay:.6s"><span class="rc-time">17:50 →</span><span><b>Goodbyes</b> in the order the lessons started (your notes tell you who’s first): project, specific feedback, reflection, next lesson, goodbye.</span></li>
+    </ol>
+    <div class="rc-now" style="animation-delay:.85s">${perfect
+      ? '<b>Perfect lesson!</b> Play it again from time to time, and review the lesson structure before your first parallel lesson.'
+      : '<b>Next step:</b> play it again until every decision feels obvious. Aim for 10/10 without losing a life.'}</div>
+    <div class="btns"><button class="btn-p" id="mStruct">📋 Lesson structure</button><button class="btn-p" id="mMenu">Back to menu</button><button class="btn-y" id="mAgain">Play the game again</button></div></div>`);
+  $('#mStruct').onclick = openStructure;
   $('#mAgain').onclick = startGame;
   $('#mMenu').onclick = restart;
 }
@@ -1441,7 +1708,7 @@ function nextToast(){
   const t = $('#toast'), m = toastQ.shift();
   if (!m){ t.style.display = 'none'; toastT = null; return; }
   t.textContent = m; t.style.display = 'block';
-  toastT = setTimeout(nextToast, 2500);
+  toastT = setTimeout(nextToast, m.length > 60 ? 5000 : 2500);
 }
 
 window.addEventListener('resize', placeOverlays);
@@ -1470,15 +1737,74 @@ function showIntro(){
       <div class="phase ${unlocked ? '' : 'locked'}"><div class="pn">Part 2</div><b>Decision game</b><span>Choose what to do in each situation — or click the right button in Classroom yourself. Correct decisions move you forward; wrong ones cost you a life.</span>
         <button class="btn-y" id="gameBtn" ${unlocked ? '' : 'disabled'}>${unlocked ? 'Play the decision game →' : '🔒 Complete the guided tour to unlock'}</button></div>
     </div>
+    <div class="sound-row"><button class="btn-ghost" id="iStructure">📋 Lesson structure</button><button class="btn-ghost" id="iBack">← Back to the introduction</button></div>
   </div>`;
   el.style.display = 'block';
+  el.scrollTop = 0;
+  $('#iStructure').onclick = openStructure;
+  $('#iBack').onclick = showWelcome;
   $('#startBtn').onclick = startGuide;
   if (unlocked) $('#gameBtn').onclick = startGame;
 }
 
+/* First page: what the simulator is and how it must be used. The menu (showIntro) opens after START SIMULATION. */
+function showWelcome(){
+  const el = $('#intro');
+  el.innerHTML = `<div class="intro-wrap">
+    <span class="intro-kicker">Parallel lessons · Mandatory training</span>
+    <h1>Classroom <span>Simulator</span></h1>
+    <p class="lead-p">This simulator recreates a <b>real parallel lesson</b> in Classroom, step by step. The interface, the lesson materials and the situations are the ones you’ll find in your own lessons: what you see here is exactly what will happen with your students.</p>
+    <div class="welcome-box">
+      <h3>Why this matters</h3>
+      <p>In a parallel lesson you look after up to <b>4 students at the same time</b>, each at a different point of their lesson. There’s no time to look things up while it’s happening, so every step has to feel natural <b>before</b> your first parallel lesson.</p>
+      <p>You’re expected to become <b>100% familiar</b> with this simulation. It’s presented as a game, but it’s a work tool: go through it as many times as you need, until every step feels easy and comfortable.</p>
+    </div>
+    <div class="welcome-box">
+      <h3>How to use it</h3>
+      <ol class="how">
+        <li><div>Read the <b>structure of a parallel lesson</b>. It’s a training reference and isn’t part of the lesson materials. You can open it again at any time from the top bar.<br><button class="btn-ghost" id="wStructure">📋 Read the lesson structure</button></div></li>
+        <li><div>Complete the <b>guided tour</b>. It’s mandatory: it shows you every tool and step with your first student, and it unlocks the decision game.</div></li>
+        <li><div>Play the <b>decision game</b>: 10 real situations from the same lesson, where you decide what to do.</div></li>
+        <li><div><b>Repeat it</b> until it feels easy. Aim for 10/10 decisions without losing a life.</div></li>
+      </ol>
+    </div>
+    <div class="welcome-box">
+      <h3>🔊 Sound on</h3>
+      <p>Students and the tutor speak during the simulation. Use headphones if you can, and check your sound before you start.</p>
+      <div class="sound-row"><button class="btn-ghost" id="wSound">▶ Test my sound</button><span id="soundMsg"></span></div>
+    </div>
+    <button class="btn-y btn-start" id="wStart">START SIMULATION →</button>
+  </div>`;
+  el.style.display = 'block';
+  el.scrollTop = 0;
+  $('#wStructure').onclick = openStructure;
+  $('#wSound').onclick = soundTest;
+  $('#wStart').onclick = showIntro;
+}
+
+// Plays a short chime (checks the speakers) and loads one of the simulator's sound files (checks the Audios folder)
+function soundTest(){
+  const msg = $('#soundMsg');
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [660, 880].forEach((hz, k) => {
+      const o = ctx.createOscillator(), g = ctx.createGain(), t = ctx.currentTime + k * 0.18;
+      o.frequency.value = hz; o.connect(g); g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.3, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.35);
+      o.start(t); o.stop(t + 0.4);
+    });
+  } catch(e){}
+  msg.textContent = 'Checking the sound files…';
+  const a = new Audio(AUDIO + 'Alexander_reflection.mp3');
+  a.preload = 'metadata';
+  a.onloadedmetadata = () => { msg.innerHTML = '✅ You should have heard a short chime, and the sound files are ready. If you heard nothing, check your volume.'; };
+  a.onerror = () => { msg.innerHTML = '⚠️ The sound files couldn’t be loaded. Make sure the <b>Audios</b> folder is in the same folder as this simulator.'; };
+  a.load();
+}
+
 S = freshState();
 render();
-showIntro();
+showWelcome();
 </script>
 </body>
 </html>
