@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classroom Simulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Unbounded:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#232839;--panel:#2f3650;--line:#454d6b;--txt:#e8eaf1;--muted:#a9aec1;--lime:#cdf24a;--yellow:#ffd34d;--ink:#1f2433}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;color:var(--txt);font-family:Inter,system-ui,sans-serif;background:radial-gradient(1200px 600px at 15% -10%,#3b4570 0%,var(--bg) 60%) fixed,var(--bg);display:flex;flex-direction:column}
+  main{max-width:900px;width:100%;margin:0 auto;padding:70px 22px 40px;flex:1}
+  .logo{font-family:Unbounded,sans-serif;font-weight:600;font-size:20px}
+  .kicker{display:inline-block;margin-top:34px;background:var(--yellow);color:#2a2410;font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:6px 14px}
+  h1{font-family:Unbounded,sans-serif;font-size:44px;line-height:1.12;margin:18px 0 12px}
+  h1 span{background:var(--lime);color:var(--ink);padding:0 12px;border-radius:12px}
+  p.lead{font-size:17px;line-height:1.65;color:#cfd3e2;max-width:680px;margin:0 0 30px}
+  .langs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+  .lang{display:flex;align-items:center;gap:14px;border-radius:20px;padding:20px;background:var(--panel);border:2px solid var(--line);color:var(--txt);text-decoration:none;transition:transform .2s,border-color .2s}
+  .lang:hover{transform:translateY(-4px);border-color:var(--lime)}
+  .lang .code{flex:0 0 52px;height:52px;border-radius:14px;background:var(--lime);color:var(--ink);display:grid;place-items:center;font-family:Unbounded,sans-serif;font-weight:700;font-size:16px}
+  .lang b{display:block;font-size:17px}
+  .lang small{color:var(--muted);font-size:13px}
+  footer{text-align:center;color:#7f87a8;font-size:12.5px;padding:20px}
+  @media (max-width:600px){h1{font-size:32px}}
+</style>
+</head>
+<body>
+<main>
+  <span class="logo">kodland</span><br>
+  <span class="kicker">Parallel Lessons · Classroom</span>
+  <h1>Classroom <span>Simulator</span></h1>
+  <p class="lead">Choose your language · Scegli la lingua · Wybierz język</p>
+  <div class="langs" id="langs"></div>
+</main>
+<footer>kodland · Classroom Simulator</footer>
+
+<!-- The cards come from content/languages.js: to add a language, enable its line there -->
+<script src="content/languages.js"></script>
+<script>
+  var langs = window.SIM_LANGUAGES || [{ code: 'en', name: 'English' }];
+  // Opened with ?lang=it (e.g. from the PL training)? Go straight to the simulator in that language
+  var q = ((location.search.match(/[?&]lang=([a-z-]+)/i) || [])[1] || '').toLowerCase();
+  if (q && langs.some(function(l){ return l.code === q; })) location.replace('Classroom_Simulator.html?lang=' + q);
+  langs.forEach(function(l){
+    var a = document.createElement('a');
+    a.className = 'lang';
+    a.href = 'Classroom_Simulator.html?lang=' + encodeURIComponent(l.code);
+    a.innerHTML = '<span class="code">' + l.code.toUpperCase() + '</span><span><b>' + l.name + '</b><small>Start →</small></span>';
+    document.getElementById('langs').appendChild(a);
+  });
+</script>
+</body>
+</html>
