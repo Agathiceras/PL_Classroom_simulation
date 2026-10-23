@@ -1091,23 +1091,28 @@ function showWelcome(){
 }
 
 // Plays a short chime (checks the speakers) and loads one of the simulator's sound files (checks the Audios folder)
+// "Test my sound": plays Audios/<LANG>/test-sound.mp3 (the English one if that language doesn’t have it yet).
+// Pressing the button again restarts it. The message appears once the sound really starts playing.
+let soundTestAudio = null;
 function soundTest(){
   const msg = $('#soundMsg');
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    [660, 880].forEach((hz, k) => {
-      const o = ctx.createOscillator(), g = ctx.createGain(), t = ctx.currentTime + k * 0.18;
-      o.frequency.value = hz; o.connect(g); g.connect(ctx.destination);
-      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.3, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.35);
-      o.start(t); o.stop(t + 0.4);
-    });
-  } catch(e){}
+  if (soundTestAudio){ try { soundTestAudio.pause(); } catch(e){} soundTestAudio = null; }
   msg.textContent = U.soundChecking;
-  const a = new Audio(AUDIO + 'Alexander_reflection.mp3');
-  a.preload = 'metadata';
-  a.onloadedmetadata = () => { msg.innerHTML = U.soundOk; };
-  a.onerror = () => { if (a.src.indexOf(AUDIO_EN) < 0 && AUDIO !== AUDIO_EN){ a.src = AUDIO_EN + 'Alexander_reflection.mp3'; a.load(); return; } msg.innerHTML = U.soundFail; };
-  a.load();
+  const a = new Audio();
+  soundTestAudio = a;
+  const sources = AUDIO === AUDIO_EN ? [AUDIO_EN] : [AUDIO, AUDIO_EN];   // this language first, then English
+  let i = -1;
+  const next = () => {
+    if (soundTestAudio !== a) return;                       // a newer press took over
+    if (++i >= sources.length){ msg.innerHTML = U.soundFail; return; }
+    const mine = i;
+    const failed = () => { if (mine === i) next(); };       // ignore the second signal of the same failed attempt
+    a.onerror = failed;
+    a.src = sources[i] + 'test-sound.mp3';
+    a.play().catch(failed);
+  };
+  a.onplaying = () => { msg.innerHTML = U.soundOk; };
+  next();
 }
 
 S = freshState();
