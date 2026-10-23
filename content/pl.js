@@ -92,8 +92,8 @@ window.SIM_CONTENT = {
     notesAlt: "Twoje notatki",
     notesBack: "← Wróć do gry",
 
-    soundChecking: "Sprawdzam pliki dźwiękowe…",
-    soundOk: "✅ Powinieneś usłyszeć krótki dzwonek, a pliki dźwiękowe są gotowe. Jeśli nic nie słyszałeś, sprawdź głośność.",
+    soundChecking: "Ładuję dźwięk testowy…",
+    soundOk: "🔊 Odtwarzam dźwięk testowy. Jeśli go nie słyszysz, sprawdź głośność i słuchawki, a potem naciśnij przycisk jeszcze raz.",
     soundFail: "⚠️ Nie udało się wczytać plików dźwiękowych. Upewnij się, że folder <b>Audios</b> znajduje się w tym samym folderze co ten symulator."
   },
 

@@ -92,8 +92,8 @@ window.SIM_CONTENT = {
     notesAlt: "Your notes",
     notesBack: "← Back to the game",
 
-    soundChecking: "Checking the sound files…",
-    soundOk: "✅ You should have heard a short chime, and the sound files are ready. If you heard nothing, check your volume.",
+    soundChecking: "Loading the test sound…",
+    soundOk: "🔊 Playing the test sound. If you can’t hear it, check your volume and your headphones, then press the button again.",
     soundFail: "⚠️ The sound files couldn’t be loaded. Make sure the <b>Audios</b> folder is in the same folder as this simulator."
   },
 

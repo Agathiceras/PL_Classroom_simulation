@@ -92,8 +92,8 @@ window.SIM_CONTENT = {
     notesAlt: "I tuoi appunti",
     notesBack: "← Torna al gioco",
 
-    soundChecking: "Verifica dei file audio in corso…",
-    soundOk: "✅ Dovresti aver sentito un breve suono: i file audio sono pronti. Se non hai sentito nulla, controlla il volume.",
+    soundChecking: "Caricamento dell’audio di prova…",
+    soundOk: "🔊 Sto riproducendo l’audio di prova. Se non lo senti, controlla il volume e le cuffie, poi premi di nuovo il pulsante.",
     soundFail: "⚠️ Impossibile caricare i file audio. Assicurati che la cartella <b>Audios</b> si trovi nella stessa cartella di questo simulatore."
   },
 
