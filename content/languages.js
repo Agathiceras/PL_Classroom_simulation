@@ -6,6 +6,6 @@
    ===================================================================== */
 window.SIM_LANGUAGES = [
   { code: "en", name: "English" },
-  { code: "it", name: "Italiano" }
-  // { code: "pl", name: "Polski" }
+  { code: "it", name: "Italiano" },
+  { code: "pl", name: "Polski" }
 ];
