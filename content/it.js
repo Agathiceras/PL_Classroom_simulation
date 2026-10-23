@@ -117,6 +117,20 @@ window.SIM_CONTENT = {
     start: "AVVIA LA SIMULAZIONE →"
   },
 
+  /* Passo prima della guida: il tutor entra nella classe che sta per iniziare, da Back Office (due modi) */
+  enter: {
+    kicker: "Prima della lezione",
+    title: "La tua classe sta per iniziare",
+    text: "È quasi ora. <b>Entra nella classe</b> da Back Office. Ci sono due modi per farlo: provane uno — o entrambi.",
+    way1Title: "Dal tuo Parallel Group",
+    way1: "Gruppi → Parallel Groups → apri il tuo gruppo → clicca sull’icona del monitor. Attivo fino a 60 minuti prima della lezione.",
+    way2Title: "Dal tuo Schedule",
+    way2: "Profilo → Schedule → clicca sulla lezione → Apri Console. Attivo fino a 30 minuti prima della lezione.",
+    waiting: "Clicca pure in giro: qui non può andare nulla storto.",
+    done: "✅ Sei dentro! Apro la Classroom…",
+    skip: "Salta questo passaggio →"
+  },
+
   menu: {
     kicker: "Lezioni parallele · Formazione tutor",
     lead: "In questo gioco vivrai situazioni reali di una lezione in Classroom. Sei il tutor di un gruppo parallelo di <b>4 studenti</b> e un nuovo studente entra nella lezione <b>ogni 10 minuti</b>.",

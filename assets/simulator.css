@@ -359,3 +359,18 @@ svg{display:block}
 .simcode span{display:block;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1f7a45}
 .simcode b{display:block;font-family:Unbounded,Inter,sans-serif;font-size:26px;letter-spacing:.06em;margin:4px 0;color:#1f2433;user-select:all}
 .simcode small{color:#5a6075;font-size:13px}
+
+/* Step before the guided tour: enter the class from Back Office (iframe with the BO simulator in "enter" mode) */
+#enterClass{position:fixed;inset:0;z-index:1500;display:flex;flex-direction:column;background:#232839}
+#enterClass .ec-head{padding:18px 26px 14px;border-bottom:1px solid #454d6b;background:radial-gradient(900px 300px at 10% -40%,#3b4570 0%,#232839 70%)}
+#enterClass .ec-kicker{display:inline-block;background:#ffd34d;color:#2a2410;font-weight:800;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:5px 12px}
+#enterClass h2{font-family:Unbounded,sans-serif;font-size:22px;margin:10px 0 6px;color:#e8eaf1}
+#enterClass .ec-head p{margin:0 0 10px;color:#cfd3e2;font-size:15px;line-height:1.55}
+#enterClass .ec-ways{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#enterClass .ec-ways div{background:#2f3650;border:1px solid #454d6b;border-radius:12px;padding:10px 14px;font-size:13.5px;line-height:1.5;color:#cfd3e2}
+#enterClass .ec-ways b{display:block;color:#cdf24a;margin-bottom:3px}
+#enterClass .ec-foot{display:flex;align-items:center;gap:14px;margin-top:10px;min-height:34px}
+#enterClass .ec-msg{font-size:14px;font-weight:700;color:#a9aec1}
+#enterClass .ec-msg.ok{color:#cdf24a;font-size:15px}
+#enterClass .ec-frame{flex:1;width:100%;border:0;background:#211E33}
+@media (max-width:760px){#enterClass .ec-ways{grid-template-columns:1fr}}

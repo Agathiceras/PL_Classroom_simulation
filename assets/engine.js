@@ -355,10 +355,38 @@ const GUIDE = [
   { clock:8, enter:() => join(1), target:'#room-1', accept:['enterRoom:1'], last:true }
 ].map((st, i) => Object.assign({}, C.guide[i], st));
 
+/* Step 0 of the guided tour: enter the class that is about to start, from Back Office (the BO simulator, in "enter" mode).
+   Either of the two ways works; then the tour begins. A language without C.enter skips the step. */
+const ENTER_KEY = 'pl-sim-entered';
+function enterClassStep(then){
+  const E = C.enter;
+  if (!E){ then(); return; }
+  let seen = false; try { seen = localStorage.getItem(ENTER_KEY) === '1'; } catch(e){}
+  const box = document.createElement('div');
+  box.id = 'enterClass';
+  box.innerHTML = `<div class="ec-head"><span class="ec-kicker">${E.kicker}</span><h2>${E.title}</h2><p>${E.text}</p>
+      <div class="ec-ways"><div><b>1 · ${E.way1Title}</b><span>${E.way1}</span></div><div><b>2 · ${E.way2Title}</b><span>${E.way2}</span></div></div>
+      <div class="ec-foot"><span class="ec-msg">${E.waiting}</span>${seen ? `<button class="btn-ghost" id="ecSkip">${E.skip}</button>` : ''}</div></div>
+    <iframe class="ec-frame" title="Back Office" src="BO_enter/enter_class.html?mode=enter&lang=${encodeURIComponent(LANG)}"></iframe>`;
+  document.body.appendChild(box);
+  let finished = false;
+  const finish = () => {
+    if (finished) return; finished = true;
+    window.removeEventListener('message', onMsg);
+    try { localStorage.setItem(ENTER_KEY, '1'); } catch(e){}
+    const msg = box.querySelector('.ec-msg'); msg.textContent = E.done; msg.classList.add('ok');
+    setTimeout(() => { box.remove(); then(); }, 1600);
+  };
+  const onMsg = e => { if (e.data && e.data.type === 'enter-class') finish(); };
+  window.addEventListener('message', onMsg);
+  const sk = box.querySelector('#ecSkip'); if (sk) sk.onclick = () => { finished = true; window.removeEventListener('message', onMsg); box.remove(); then(); };
+}
 function startGuide(){
   $('#intro').style.display = 'none';
-  S.phase = 'guide'; S.step = 0;
-  enterStep();
+  enterClassStep(() => {
+    S.phase = 'guide'; S.step = 0;
+    enterStep();
+  });
 }
 function enterStep(){
   const st = GUIDE[S.step];
